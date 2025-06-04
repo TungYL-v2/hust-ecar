@@ -1,30 +1,23 @@
 #include "headfile.h"
 
-/*
-PA0 -> MOTOR_PWMA
-PA1 -> MOTOR_PWMB
-
-PA2 -> OUTPUT_E1A
-PA3 -> OUTPUT_E1B
-
-PA6 -> MOTOR_AIN1
-PA7 -> MOTOR_AIN2
-
-PB0 -> MOTOR_BIN1
-PB1 -> MOTOR_BIN2
-*/
-
-
 int main(void)
 {
-	OLED_Init();
-	motor_init();
-	motorA_duty(20000);	//LEFT SPEED (MAX:50000)
-	motorB_duty(19840); //RIGHT
-
-	while (1)
+//	OLED_Init();
+	motor_init();       //电机初始化
+	encoder_init();     //编码器初始化
+	//motorA_duty(20000);    
+	//motorB_duty(19840); 
+     uart_init(UART_1,115200,0x00);
+	//增量式不行就试试位置式POSITION_PID
+	pid_init(&motorA, POSITION_PID, 10, 10, 5);
+	pid_init(&motorB, POSITION_PID, 10, 10, 5);
+	motor_target_set(10, 10);
+	tim_interrupt_ms_init(TIM_3,10,0);
+ 	while (1)
 	{
-
-	
+		printf("speedA_now:%d,speedB_now:%d\r\n",(int)motorA.now,(int)motorB.now);
+		//printf("speed_now:%d\r\n",(int)speed_now);
 	} 
 }
+
+
