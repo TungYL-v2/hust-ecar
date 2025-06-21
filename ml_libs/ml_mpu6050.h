@@ -4,7 +4,7 @@
 #include "ml_i2c.h"
 #include "math.h"
 
-#define MPU6050_ADDR	   0xd0 
+#define MPU6050_ADDR	   0x6a//0xd0 
 #define SMPLRT_DIV       0x19
 #define CONFIG           0x1a
 #define GYRO_CONFIG      0x1b
@@ -26,7 +26,7 @@
 #define PWR_MGMT_1       0x6b
 #define PWR_MGMT_2       0x6c
 #define INT_ENABLE       0x38
-#define WHO_AM_I         0x75
+#define WHO_AM_I         0x64
 
 extern int16_t ax, ay, az, gx, gy, gz;
 extern float roll_gyro, pitch_gyro, yaw_gyro;

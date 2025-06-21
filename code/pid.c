@@ -59,17 +59,17 @@ void pid_control()
 {
 	// 角度环
 	// 1.设定目标角度
-	angle.target = -20;
+	//angle.target = -20;
 	// 2.获取当前角度
-	angle.now = yaw_Kalman;
+	//angle.now = yaw_Kalman;
 	// 3.PID控制器计算输出
-	pid_cal(&angle);
+	//pid_cal(&angle);
 	
 	// 速度环
 	// 1.根据灰度传感器信息 设定目标速度
 	// track();
 	// 1.角度环PID输出 设定为速度环的目标值
-	motor_target_set(-angle.out, angle.out);
+	//motor_target_set(-angle.out, angle.out);
 	// 2.获取当前速度
 	if(motorA_dir){motorA.now = Encoder_count1;}else{motorA.now = -Encoder_count1;}
 	if(motorB_dir){motorB.now = Encoder_count2;}else{motorB.now = -Encoder_count2;}
@@ -85,7 +85,7 @@ void pid_control()
 	motorA_duty(motorA.out);
 	motorB_duty(motorB.out);
 	
-//	datavision_send();
+	//datavision_send();
 }
 void pid_cal(pid_t *pid)
 {

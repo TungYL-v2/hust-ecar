@@ -97,7 +97,32 @@ void EXTI2_IRQHandler(void) // PA2/PB2/PC2
 		else
 			Encoder_count1 ++;
 		
+		// 获取原始数据
+		LSM6DSV16X_GetData();
+//		MPU6050_GetData();
+//		HMC5883L_GetData();
+		
+		// 陀螺仪角度
+		roll_gyro += (float)gx / 16.4 * 0.005;
+		pitch_gyro += (float)gy / 16.4 * 0.005;
+		yaw_gyro += (float)gz / 16.4 * 0.005;
+		
+		// 加速度计角度
+		roll_acc = atan((float)ay/az) * 57.296;
+		pitch_acc = - atan((float)ax/az) * 57.296;	
+		yaw_acc = atan((float)ay/ax) * 57.296;
+//		
+//		// 磁力计角度
+//		yaw_hmc = atan2((float)hmc_x, (float)hmc_y) * 57.296;
+//		
+//		// 卡尔曼滤波融合角度
+//		roll_Kalman = Kalman_Filter(&KF_Roll, roll_acc, (float)gx / 16.4);
+//		pitch_Kalman = Kalman_Filter(&KF_Pitch, pitch_acc, (float)gy / 16.4);
+//		yaw_Kalman = Kalman_Filter(&KF_Yaw, yaw_hmc, (float)gz / 16.4);
+		
 		EXTI->PR = 1<<2; //清除标志位
+		
+		
 	}
 }
 void EXTI3_IRQHandler(void) // PA3/PB3/PC3
@@ -143,26 +168,27 @@ void EXTI9_5_IRQHandler(void)
 		//此处编写中断代码
 		
 		// 获取原始数据
-		MPU6050_GetData();
-		HMC5883L_GetData();
+		LSM6DSV16X_GetData();
+//		MPU6050_GetData();
+//		HMC5883L_GetData();
 		
 		// 陀螺仪角度
 		roll_gyro += (float)gx / 16.4 * 0.005;
 		pitch_gyro += (float)gy / 16.4 * 0.005;
 		yaw_gyro += (float)gz / 16.4 * 0.005;
 		
-		// 加速度计角度
-		roll_acc = atan((float)ay/az) * 57.296;
-		pitch_acc = - atan((float)ax/az) * 57.296;	
-		yaw_acc = atan((float)ay/ax) * 57.296;
-		
-		// 磁力计角度
-		yaw_hmc = atan2((float)hmc_x, (float)hmc_y) * 57.296;
-		
-		// 卡尔曼滤波融合角度
-		roll_Kalman = Kalman_Filter(&KF_Roll, roll_acc, (float)gx / 16.4);
-		pitch_Kalman = Kalman_Filter(&KF_Pitch, pitch_acc, (float)gy / 16.4);
-		yaw_Kalman = Kalman_Filter(&KF_Yaw, yaw_hmc, (float)gz / 16.4);
+//		// 加速度计角度
+//		roll_acc = atan((float)ay/az) * 57.296;
+//		pitch_acc = - atan((float)ax/az) * 57.296;	
+//		yaw_acc = atan((float)ay/ax) * 57.296;
+//		
+//		// 磁力计角度
+//		yaw_hmc = atan2((float)hmc_x, (float)hmc_y) * 57.296;
+//		
+//		// 卡尔曼滤波融合角度
+//		roll_Kalman = Kalman_Filter(&KF_Roll, roll_acc, (float)gx / 16.4);
+//		pitch_Kalman = Kalman_Filter(&KF_Pitch, pitch_acc, (float)gy / 16.4);
+//		yaw_Kalman = Kalman_Filter(&KF_Yaw, yaw_hmc, (float)gz / 16.4);
 		
 		EXTI->PR = 1<<7; //清除标志位
 	}

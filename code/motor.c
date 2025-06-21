@@ -46,8 +46,8 @@ void motorB_duty(int duty)   //MOTOR_RIGHT
 // ±àÂëÆ÷IO³õÊ¼»¯
 void encoder_init()
 {
-	exti_init(EXTI_PA2,FALLING,0);
-	gpio_init(GPIO_A,Pin_3,IU);
+	exti_init(EXTI_PA2,FALLING,0);  //E1A
+	gpio_init(GPIO_A,Pin_3,IU);		//E1B
 	
 	exti_init(EXTI_PA4,FALLING,0);
 	gpio_init(GPIO_A,Pin_5,IU);
