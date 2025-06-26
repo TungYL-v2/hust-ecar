@@ -14,70 +14,70 @@ void gray_init()
 
 void track()                        //1234 5678
 {
-		if((D4 == 0)&&(D5 == 0))        //1110 0111
-		{
-			motor_target_set(100,100);
-		}
-		else if((D4 == 0)&&(D5 != 0))   //1110 1111
-		{
-			motor_target_set(100,120);
-		}
-		else if((D4 != 0)&&(D5 == 0))   //1111 0111
-		{
-			motor_target_set(120,100);  
-		}
-		else if((D3 != 0)&&(D4 == 0))   //1100 1111
-		{
-			motor_target_set(90,130);
-		}
-		else if((D5 == 0)&&(D6 == 0))   //1111 0011
-		{
-			motor_target_set(130,90);
-		}
-		else if((D3 == 0)&&(D4 != 0))   //1101 1111
-		{
-			motor_target_set(90,130);
-		}
-		else if((D5 != 0)&&(D6 == 0))   //1111 1011
-		{
-			motor_target_set(130,90);
-		}
-		else if((D2 == 0)&&(D3 == 0))   //1001 1111
-		{
-			motor_target_set(80,150);
-		}
-		else if((D6 == 0)&&(D7 == 0))   //1111 1001
-		{
-			motor_target_set(150,80);
-		}
-		else if((D2 == 0)&&(D3 != 0))   //1011 1111
-		{
-			motor_target_set(80,150);
-		}
-		else if((D6 != 0)&&(D7 == 0))   //1111 1101
-		{
-			motor_target_set(150,80);
-		}
-		else if((D1 == 0)&&(D2 == 0))   //0011 1111
-		{
-			motor_target_set(60,180);
-		}
-		else if((D7 == 0)&&(D8 == 0))   //1111 1100
-		{
-			motor_target_set(180,60);
-		}
-		else if((D1 == 0)&&(D2 != 0))   //0111 1111
-		{
-			motor_target_set(40,180);
-		}	
-		else if((D7 !=0)&&(D8 == 0))    //1111 1110
-		{
-			motor_target_set(180,40);
-		}
-		else                            //1111 1111
-		{
-			motor_target_set(100,100);
-		}
+        if((D4 == 0)&&(D5 == 0))        //1110 0111
+        {
+            motor_target_set(10,10);
+        }
+        else if((D4 == 0)&&(D5 != 0))   //1110 1111
+        {
+            motor_target_set(10,12);
+        }
+        else if((D4 != 0)&&(D5 == 0))   //1111 0111
+        {
+            motor_target_set(12,10);  
+        }
+        else if((D3 != 0)&&(D4 == 0))   //1100 1111
+        {
+            motor_target_set(9,13);
+        }
+        else if((D5 == 0)&&(D6 == 0))   //1111 0011
+        {
+            motor_target_set(13,9);
+        }
+        else if((D3 == 0)&&(D4 != 0))   //1101 1111
+        {
+            motor_target_set(9,13);
+        }
+        else if((D5 != 0)&&(D6 == 0))   //1111 1011
+        {
+            motor_target_set(13,9);
+        }
+        else if((D2 == 0)&&(D3 == 0))   //1001 1111
+        {
+            motor_target_set(8,15);
+        }
+        else if((D6 == 0)&&(D7 == 0))   //1111 1001
+        {
+            motor_target_set(15,8);
+        }
+        else if((D2 == 0)&&(D3 != 0))   //1011 1111
+        {
+            motor_target_set(8,15);
+        }
+        else if((D6 != 0)&&(D7 == 0))   //1111 1101
+        {
+            motor_target_set(15,8);
+        }
+        else if((D1 == 0)&&(D2 == 0))   //0011 1111
+        {
+            motor_target_set(6,18);
+        }
+        else if((D7 == 0)&&(D8 == 0))   //1111 1100
+        {
+            motor_target_set(18,6);
+        }
+        else if((D1 == 0)&&(D2 != 0))   //0111 1111
+        {
+            motor_target_set(4,18);
+        }    
+        else if((D7 !=0)&&(D8 == 0))    //1111 1110
+        {
+            motor_target_set(18,4);
+        }
+        else                            //1111 1111
+        {
+            motor_target_set(10,10);
+        }
 }
 
 unsigned char digtal(unsigned char channel)//1-8	  获取X通道数字值

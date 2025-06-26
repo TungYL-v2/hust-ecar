@@ -3,6 +3,10 @@
 #define PCLK1	36000000  //除了USART1外，其余串口都挂在APB1总线上，使用PCLK1分频 时钟频率为36MHZ
 #define PCLK2 72000000  //USART1挂在APB2总线上，使用PCLK2分频 时钟频率为72MHZ 
 
+
+
+
+
 USART_TypeDef *uart_index[3] = { USART1 , USART2 , USART3 };
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -149,6 +153,9 @@ uint8_t uart_getbyte(UARTn_enum uartn)
 	uint8_t data = uart_index[uartn]->DR;	   //从数据寄存器中读取数据
 	return data;
 }
+
+
+
 
 
 

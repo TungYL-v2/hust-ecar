@@ -43,23 +43,31 @@ void LSM6DSV16X_Init()
     uint8_t id = LSM6DSV16X_Read(LSM6DSV16X_WHO_AM_I);
     if(id != 0x70) {
         // 错误处理
-        while(1);
+        //while(1);
     }
-    
-    LSM6DSV16X_Write(LSM6DSV16X_CTRL1_XL, 0x6C);  // 加速度计416Hz, ±4g
-    LSM6DSV16X_Write(LSM6DSV16X_CTRL2_G, 0x6C);   // 陀螺仪416Hz, ±2000dps
-    
-    // 2. 关键中断配置寄存器
-    LSM6DSV16X_Write(LSM6DSV16X_CTRL3_C, 0x44);   // BDU=1, PP_OD=0 (推挽输出)
-    LSM6DSV16X_Write(LSM6DSV16X_INT1_CTRL, 0x03); // 使能加速度+陀螺仪DRDY
-    
-    // 3. 必须配置的辅助寄存器
+    // 1. 加速度计配置：ODR=208Hz, ±2g, 高性能模式
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL1_XL, 0x4C);  // 01001100
 
-	LSM6DSV16X_Write(0x5A, 0x08);  // 设置INT1驱动强度为strong
-    LSM6DSV16X_Write(0x0E, 0x00);    // INT1引脚无上拉
-    //LSM6DSV16X_Write(0x5A, 0x01);    // 中断脉冲宽度=1个ODR周期
-    LSM6DSV16X_Write(0x5B, 0x00);    // 中断信号无延迟
-    
+    // 2. 陀螺仪配置：ODR=208Hz, ±2000dps, 高性能模式
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL2_G, 0x5C);   // 01011100
+
+    // 3. 系统控制：启用BDU和地址自增
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL3_C, 0x44);   // 01000100
+
+    // 4. 陀螺仪量程设置：±2000dps
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL6_C, 0x0C);   // 00001100
+
+    // 5. 加速度计量程确认：±2g（默认值）
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL8_XL, 0x00);  // 00000000
+  
+	//LSM6DSV16X_Write(LSM6DSV16X_CTRL4_C, 0x04);   // 使能INT1的DRDY脉冲模式
+
+
+	LSM6DSV16X_Write(LSM6DSV16X_IF_CFG, 0x80);    // INT1推挽输出/高电平有效(PP_OD=0, H_LACTIVE=0)
+	LSM6DSV16X_Write(LSM6DSV16X_INT1_CTRL, 0x00); 
+	
+    LSM6DSV16X_Write(LSM6DSV16X_MD1_CFG, 0x00);
+	LSM6DSV16X_Write(LSM6DSV16X_FIFO_CTRL1, 0x00);  // 关闭FIFO
 
 }
 
@@ -69,7 +77,7 @@ void LSM6DSV16X_GetData()
 	uint8_t status = LSM6DSV16X_Read(0x1E); // STATUS_REG
 	if(!(status & 0x02)) { 
 		printf("Gyro data not ready! STATUS=0x%02X\r\n", status);
-		return; // 数据未就绪时直接返回
+		//return; // 数据未就绪时直接返回
 }
 
     uint8_t data_h, data_l;
@@ -99,4 +107,7 @@ void LSM6DSV16X_GetData()
     data_h = LSM6DSV16X_Read(LSM6DSV16X_OUTZ_H_G);
     data_l = LSM6DSV16X_Read(LSM6DSV16X_OUTZ_L_G);
     gz = (data_h << 8) | data_l;
+	
+	if(gz<=2 && gz>=-1)
+		gz = 0;
 }

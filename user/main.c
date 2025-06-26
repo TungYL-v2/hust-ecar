@@ -1,16 +1,19 @@
 #include "headfile.h"
 
+
 int main(void)
 {
 
 	motor_init();       //电机初始化
 	encoder_init();     //编码器初始化
-	//motorA_duty(20000);    
-	//motorB_duty(19840); 
+//	motorA_duty(20000);    
+//	motorB_duty(19840); 
     uart_init(UART_1,115200,0x00);
 	//增量式不行就试试位置式POSITION_PID
 	pid_init(&motorA, POSITION_PID, 10, 10, 5);
 	pid_init(&motorB, POSITION_PID, 10, 10, 5);
+	pid_init(&angle, POSITION_PID, 2, 0, 0.5);
+
 	motor_target_set(10, 10);
 	
 	
@@ -19,8 +22,12 @@ int main(void)
 	
 	I2C_Init();
 	LSM6DSV16X_Init();
-//	MPU6050_Init();
-	exti_init(EXTI_PB7,FALLING,0);
+	
+	//磁力计
+	HMC5883L_Init();
+	gpio_init(GPIO_B,Pin_7,OUT_PP);
+	exti_init(EXTI_PB7,RISING,0);
+	gpio_set(GPIO_B,Pin_7,0);
 	
 	
 	
@@ -28,23 +35,19 @@ int main(void)
 	tim_interrupt_ms_init(TIM_3,10,0);
  	while (1)
 	{
-//		printf("speedA_now:%d,speedB_now:%d\r\n",(int)motorA.now,(int)motorB.now);
-		//printf("speed_now:%d\r\n",(int)speed_now);
-		LSM6DSV16X_GetData();
-				// 陀螺仪角度
-		roll_gyro += (float)gx / 16.4 * 0.005;
-		pitch_gyro += (float)gy / 16.4 * 0.005;
-		yaw_gyro += (float)gz / 16.4 * 0.005;
-		
-		// 加速度计角度
-		roll_acc = atan((float)ay/az) * 57.296;
-		pitch_acc = - atan((float)ax/az) * 57.296;	
-		yaw_acc = atan((float)ay/ax) * 57.296;
-		roll_Kalman = Kalman_Filter(&KF_Roll, roll_acc, (float)gx / 16.4);
-		pitch_Kalman = Kalman_Filter(&KF_Pitch, pitch_acc, (float)gy / 16.4);
-		//printf("roll_gyro:%.2f,pitch_gyro:%.2f,yaw_gyro:%.2f,roll_acc:%.2f,pitch_acc:%.2f,yaw_acc:%.2f\r\n",roll_gyro,pitch_gyro,yaw_gyro,roll_acc,pitch_acc,yaw_acc);
-		printf("roll_Kalman:%.2f\r\n",roll_Kalman);
+
 		delay_ms(20);
+		
+		//printf("speedA_now:%d,speedB_now:%d\r\n",(int)motorA.now,(int)motorB.now);
+		//printf("speed_now:%d\r\n",(int)speed_now);
+		printf("yaw_gyro:%.2f,gz:%d\r\n",yaw_gyro,gz);
+		//HMC5883L_GetData();
+		//yaw_hmc = atan2((float)hmc_x, (float)hmc_y) * 57.296;
+//		printf("yaw_hmc:%.2f\r\n",yaw_hmc);
+		printf("angle.out:%.2f\r\n",angle.out);
+		//uint8_t status = LSM6DSV16X_Read(0x1E); // STATUS_REG
+		//printf("STATUS: 0x%02X\r\n", status);
+		//delay_ms(20);
 		// 读取CTRL2_G寄存器值（应为0x6C）
 		//uint8_t ctrl2g = LSM6DSV16X_Read(LSM6DSV16X_CTRL2_G); 
 		//printf("CTRL2_G=0x%02X\n", ctrl2g); // 预期输出0x6C
