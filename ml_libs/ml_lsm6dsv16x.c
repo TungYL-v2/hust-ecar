@@ -48,23 +48,25 @@ void LSM6DSV16X_Init()
     // 1. 加速度计配置：ODR=208Hz, ±2g, 高性能模式
     LSM6DSV16X_Write(LSM6DSV16X_CTRL1_XL, 0x4C);  // 01001100
 
-    // 2. 陀螺仪配置：ODR=208Hz, ±2000dps, 高性能模式
-    LSM6DSV16X_Write(LSM6DSV16X_CTRL2_G, 0x5C);   // 01011100
+    // 2. 陀螺仪配置：ODR=240Hz, 高性能模式
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL2_G, 0x07);   // 00000111
 
     // 3. 系统控制：启用BDU和地址自增
-    LSM6DSV16X_Write(LSM6DSV16X_CTRL3_C, 0x44);   // 01000100
+    //LSM6DSV16X_Write(LSM6DSV16X_CTRL3_C, 0x44);   // 01000100
 
     // 4. 陀螺仪量程设置：±2000dps
-    LSM6DSV16X_Write(LSM6DSV16X_CTRL6_C, 0x0C);   // 00001100
+    LSM6DSV16X_Write(LSM6DSV16X_CTRL6_C, 0x04);   // 00001100
 
     // 5. 加速度计量程确认：±2g（默认值）
     LSM6DSV16X_Write(LSM6DSV16X_CTRL8_XL, 0x00);  // 00000000
   
-	//LSM6DSV16X_Write(LSM6DSV16X_CTRL4_C, 0x04);   // 使能INT1的DRDY脉冲模式
+	LSM6DSV16X_Write(LSM6DSV16X_CTRL4_C, 0x0a);   // 使能INT1的DRDY脉冲模式
 
 
-	LSM6DSV16X_Write(LSM6DSV16X_IF_CFG, 0x80);    // INT1推挽输出/高电平有效(PP_OD=0, H_LACTIVE=0)
-	LSM6DSV16X_Write(LSM6DSV16X_INT1_CTRL, 0x00); 
+	LSM6DSV16X_Write(LSM6DSV16X_IF_CFG, 0x78);    // INT1推挽输出/低电平有效
+	LSM6DSV16X_Write(LSM6DSV16X_INT1_CTRL, 0x40); //陀螺仪
+	LSM6DSV16X_Write(LSM6DSV16X_COUNTER_BDR1, 0x4a);
+	LSM6DSV16X_Write(LSM6DSV16X_COUNTER_BDR2, 0xf4);
 	
     LSM6DSV16X_Write(LSM6DSV16X_MD1_CFG, 0x00);
 	LSM6DSV16X_Write(LSM6DSV16X_FIFO_CTRL1, 0x00);  // 关闭FIFO
@@ -76,7 +78,7 @@ void LSM6DSV16X_GetData()
 	// 在LSM6DSV16X_GetData()开头添加状态检查
 	uint8_t status = LSM6DSV16X_Read(0x1E); // STATUS_REG
 	if(!(status & 0x02)) { 
-		printf("Gyro data not ready! STATUS=0x%02X\r\n", status);
+		//printf("Gyro data not ready! STATUS=0x%02X\r\n", status);
 		//return; // 数据未就绪时直接返回
 }
 
@@ -108,6 +110,6 @@ void LSM6DSV16X_GetData()
     data_l = LSM6DSV16X_Read(LSM6DSV16X_OUTZ_L_G);
     gz = (data_h << 8) | data_l;
 	
-	if(gz<=2 && gz>=-1)
+	if(gz<=3 && gz>=-1)
 		gz = 0;
 }

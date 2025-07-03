@@ -25,6 +25,7 @@ void HMC5883L_GetData(void);
 
 extern int16_t hmc_x, hmc_y, hmc_z;
 extern float yaw_hmc;
+extern int a;
 
 #endif
 

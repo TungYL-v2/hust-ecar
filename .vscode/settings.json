@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "ml_jy901s.h": "c",
+        "ml_i2c.h": "c"
+    }
+}

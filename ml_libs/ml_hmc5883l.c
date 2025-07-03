@@ -2,6 +2,7 @@
 
 int16_t hmc_x, hmc_y, hmc_z;
 float yaw_hmc;
+int a;
 
 void HMC5883L_Write(uint8_t addr, uint8_t dat)
 {
