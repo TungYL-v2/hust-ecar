@@ -30,7 +30,7 @@ uint8_t LSM6DSV16X_Read(uint8_t addr)
     I2C_Start();
     I2C_SendByte(LSM6DSV16X_ADDR | 0x01);
     I2C_WaitAck();
-    uint8_t dat = I2C_ReceiveByte();
+    uint8_t dat = I2C_ReceiveByte(0);
     I2C_NotSendAck();
     I2C_Stop();
     
