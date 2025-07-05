@@ -2,7 +2,6 @@
 
 int16_t hmc_x, hmc_y, hmc_z;
 float yaw_hmc;
-int a;
 
 void HMC5883L_Write(uint8_t addr, uint8_t dat)
 {
@@ -28,7 +27,7 @@ uint8_t HMC5883L_Read(uint8_t addr)
 	I2C_Start();
 	I2C_SendByte(HMC5883L_ADDR | 0x01);
 	I2C_WaitAck();
-	uint8_t dat = I2C_ReceiveByte();
+	uint8_t dat = I2C_ReceiveByte(0);
 	I2C_NotSendAck();
 	I2C_Stop();
 	
