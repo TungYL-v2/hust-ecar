@@ -8,6 +8,7 @@ void I2C_Init()
 {
 	gpio_init(I2C_GPIO, I2C_SCL_GPIO_Pin, OUT_OD);
 	gpio_init(I2C_GPIO, I2C_SDA_GPIO_Pin, OUT_OD);
+	
 	SDA_Output(1);
 	SCL_Output(1);
 }
@@ -24,7 +25,6 @@ void I2C_Start()
 // жуж╧пе╨е 
 void I2C_Stop()
 {
-	//SCL_Output(0);
 	SDA_Output(0);
 	SCL_Output(1);
 	SDA_Output(1);
@@ -87,5 +87,4 @@ uint8_t I2C_WaitAck()
 	
 	return byte;
 }
-
 

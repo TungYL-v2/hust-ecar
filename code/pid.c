@@ -3,7 +3,6 @@
 pid_t motorA;
 pid_t motorB;
 pid_t angle;
-//float yaw_gyro;
 
 void datavision_send()  // 上位机波形发送函数
 {
@@ -32,7 +31,6 @@ void pid_init(pid_t *pid, uint32_t mode, float p, float i, float d)
 
 void motor_target_set(int spe1, int spe2)
 {
-
 	if(spe1 >= 0)
 	{
 		motorA_dir = 1;
@@ -59,21 +57,19 @@ void motor_target_set(int spe1, int spe2)
 
 void pid_control()
 {
-//	// 角度环
-//	// 1.设定目标角度
-//	angle.target = -111;
-//	// 2.获取当前角度
-//	angle.now = yaw_Kalman;
-//	// 3.PID控制器计算输出
-//	pid_cal(&angle);
+	// 角度环
+	// 1.设定目标角度
+	angle.target = -20;
+	// 2.获取当前角度
+	angle.now = yaw_gyro;
+	// 3.PID控制器计算输出
+	pid_cal(&angle);
 	
 	// 速度环
 	// 1.根据灰度传感器信息 设定目标速度
-
-	track();
-	
+	//track();
 	// 1.角度环PID输出 设定为速度环的目标值
-	//motor_target_set(-angle.out/20, angle.out/20);
+	motor_target_set(-angle.out, angle.out);
 	// 2.获取当前速度
 	if(motorA_dir){motorA.now = Encoder_count1;}else{motorA.now = -Encoder_count1;}
 	if(motorB_dir){motorB.now = Encoder_count2;}else{motorB.now = -Encoder_count2;}
@@ -91,48 +87,6 @@ void pid_control()
 	
 	//datavision_send();
 }
-
-void pid_control_angle(int ang)
-{
-//    // 角度环
-//    // 1.设定目标角度
-    angle.target = ang;
-//    // 2.获取当前角度
-    angle.now = yaw_gyro;
-//    // 3.PID控制器计算输出
-    pid_cal(&angle);
-    
-    // 速度环
-    // 1.根据灰度传感器信息 设定目标速度
-
-    //track();
-    
-    // 1.角度环PID输出 设定为速度环的目标值
-	if(fabs(angle.out)>5)
-	{
-		if(angle.out<0)	angle.out=-2;
-		else angle.out=2;
-	}
-    motor_target_set(-angle.out, angle.out);
-    // 2.获取当前速度
-    if(motorA_dir){motorA.now = Encoder_count1;}else{motorA.now = -Encoder_count1;}
-    if(motorB_dir){motorB.now = Encoder_count2;}else{motorB.now = -Encoder_count2;}
-    Encoder_count1 = 0;
-    Encoder_count2 = 0;
-    // 3.输入PID控制器进行计算
-    pid_cal(&motorA);
-    pid_cal(&motorB);
-    // 电机输出限幅
-    pidout_limit(&motorA);
-    pidout_limit(&motorB);
-    // 4.PID的输出值 输入给电机
-    motorA_duty(motorA.out);
-    motorB_duty(motorB.out);
-    
-    //datavision_send();
-}
-
-
 void pid_cal(pid_t *pid)
 {
 	// 计算当前偏差

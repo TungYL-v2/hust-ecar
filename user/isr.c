@@ -7,99 +7,51 @@ void TIM2_IRQHandler(void)
 	if(TIM2->SR&1)
 	{
 		//此处编写中断代码
-		JY901S_GetData();
-  
-        // 陀螺仪角度
-        yaw_gyro = yaw / 32786.0f * 180.0f;
-		
-		OLED_ShowChar(1,1,'a');
-		OLED_ShowChar(1,2,'=');
-		//OLED_ShowNum(1,3,(int)motorA.now,5);
-		OLED_ShowFloat(1,3,motorA.now,2,2);
 		TIM2->SR &= ~1; 
 	}
 }
 
-static int straight = 0;
-static int if_stop = 0;
-float yaw,yaw_gyro;
-
 void TIM3_IRQHandler(void)
 {
-    
-    if(TIM3->SR&1)
-    {
-        //此处编写中断代码
-        
-        // 获取数据
-        JY901S_GetData();
-  
-        // 陀螺仪角度
-        //yaw_gyro = yaw / 32786.0f * 180.0f;
-        
+	if(TIM3->SR&1)
+	{
+		//此处编写中断代码
+//		speed_now = Encoder_count;
+//		Encoder_count = 0;
 		
-		//OLEDshow
+				// 获取原始数据
+		LSM6DSV16X_GetData();
+//		delay_ms(20);
+//		HMC5883L_GetData();
+//		
+		// 陀螺仪角度
+		roll_gyro += (float)gx / 16.4 * 0.005;
+		pitch_gyro += (float)gy / 16.4 * 0.005;
+		yaw_gyro += (float)gz / 16.4 * 0.005*4.75;
 		
-		OLED_ShowChar(1,1,'a');
-		OLED_ShowChar(1,2,'=');
-		OLED_ShowNum(1,3,(int)motorA.now,2);
-		//OLED_ShowFloat(1,3,motorA.now,2,2);
-		OLED_ShowChar(2,1,'b');
-		OLED_ShowChar(2,2,'=');
-		OLED_ShowNum(2,3,(int)motorB.now,2);
-        
-         if((!D1 || !D2 || !D3 || !D4 || !D5 || !D6 || !D7 || !D8))  //在黑线上循迹
-        {   
-            straight = 0;
-            pid_control();        
-        }
-        else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8) && ((fabs(yaw_gyro-(-148))<40)) && (if_stop ==0) )//停车
-        {    
-            gpio_set(GPIO_A,Pin_6,1);
-            gpio_set(GPIO_A,Pin_7,1);
-            gpio_set(GPIO_B,Pin_0,1);
-            gpio_set(GPIO_B,Pin_1,1);
-            if_stop = 1 ;
-               delay_ms (500);
-                           
-        }        
-        else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8) && ((fabs(yaw_gyro-(0))<5)||(fabs(yaw_gyro-(-148))<2)))//直线pid
-        {    
-            straight = 1;
-            pid_control();                                                    
-        }            
-        else if(straight == 0 && if_stop ==1)                
-        {    
-                pid_control_angle(-148);
-            delay_ms (15);
-        }
-        else if(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)
-          pid_control();
-        TIM3->SR &= ~1; 
-    }
-}
+		// 加速度计角度
+		roll_acc = atan((float)ay/az) * 57.296;
+		pitch_acc = - atan((float)ax/az) * 57.296;	
+		yaw_acc = atan((float)ay/ax) * 57.296;
+//		
+////		// 磁力计角度
+//		yaw_hmc = atan2((float)hmc_x, (float)hmc_y) * 57.296;
+////		
+////		// 卡尔曼滤波融合角度
+//		roll_Kalman = Kalman_Filter(&KF_Roll, roll_acc, (float)gx / 16.4);
+//		pitch_Kalman = Kalman_Filter(&KF_Pitch, pitch_acc, (float)gy / 16.4);
+//		yaw_Kalman = Kalman_Filter(&KF_Yaw, yaw_hmc, (float)gz / 16.4);
 
-int a;
+		pid_control();
+		TIM3->SR &= ~1; 
+	}
+}
 
 void TIM4_IRQHandler(void)
 {
 	if(TIM4->SR&1)
 	{
 		//此处编写中断代码
-		//叫
-		printf("%f\r\n",motorA.now);
-		OLED_ShowChar(1,1,'a');
-		OLED_ShowChar(1,2,'=');
-		//OLED_ShowNum(1,3,(int)motorA.now,5);
-		OLED_ShowFloat(1,3,motorA.now,2,2);
-		if((a==1)&&(!D1 || !D2 || !D3 || !D4 || !D5 || !D6 || !D7 || !D8))
-		{
-			a = 0;
-			gpio_set(GPIO_B,Pin_6,0);
-			delay_ms(500);
-			gpio_set(GPIO_B,Pin_6,1);
-		
-		}
 		TIM4->SR &= ~1; 
 	}
 }
@@ -205,7 +157,6 @@ void EXTI3_IRQHandler(void) // PA3/PB3/PC3
 		EXTI->PR = 1<<3; //清除标志位
 	}
 }
-
 void EXTI4_IRQHandler(void) // PA4/PB4/PC4
 {
 	if(EXTI->PR&(1<<4))
@@ -238,7 +189,29 @@ void EXTI9_5_IRQHandler(void)
 	if(EXTI->PR&(1<<7))   //EXTI7  PA7/PB7/PC7
 	{
 		//此处编写中断代码
-		
+//		printf("%d",100);
+//		// 获取原始数据
+//		LSM6DSV16X_GetData();
+////		MPU6050_GetData();
+////		HMC5883L_GetData();
+//		
+//		// 陀螺仪角度
+//		roll_gyro += (float)gx / 16.4 * 0.005;
+//		pitch_gyro += (float)gy / 16.4 * 0.005;
+//		yaw_gyro += (float)gz / 16.4 * 0.005;
+//		
+//		// 加速度计角度
+//		roll_acc = atan((float)ay/az) * 57.296;
+//		pitch_acc = - atan((float)ax/az) * 57.296;	
+//		yaw_acc = atan((float)ay/ax) * 57.296;
+////		
+////		// 磁力计角度
+////		yaw_hmc = atan2((float)hmc_x, (float)hmc_y) * 57.296;
+////		
+////		// 卡尔曼滤波融合角度
+////		roll_Kalman = Kalman_Filter(&KF_Roll, roll_acc, (float)gx / 16.4);
+////		pitch_Kalman = Kalman_Filter(&KF_Pitch, pitch_acc, (float)gy / 16.4);
+////		yaw_Kalman = Kalman_Filter(&KF_Yaw, yaw_hmc, (float)gz / 16.4);
 		
 		EXTI->PR = 1<<7; //清除标志位
 	}

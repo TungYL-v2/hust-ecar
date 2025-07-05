@@ -439,16 +439,6 @@
               <FileType>5</FileType>
               <FilePath>..\code\filter.h</FilePath>
             </File>
-            <File>
-              <FileName>beep.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\beep.c</FilePath>
-            </File>
-            <File>
-              <FileName>beep.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\beep.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -605,14 +595,24 @@
               <FilePath>..\ml_libs\ml_oled.h</FilePath>
             </File>
             <File>
-              <FileName>ml_JY901S.c</FileName>
+              <FileName>ml_hmc5883l.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\ml_libs\ml_JY901S.c</FilePath>
+              <FilePath>..\ml_libs\ml_hmc5883l.c</FilePath>
             </File>
             <File>
-              <FileName>ml_JY901S.h</FileName>
+              <FileName>ml_hmc5883l.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\ml_libs\ml_JY901S.h</FilePath>
+              <FilePath>..\ml_libs\ml_hmc5883l.h</FilePath>
+            </File>
+            <File>
+              <FileName>ml_lsm6dsv16x.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\ml_libs\ml_lsm6dsv16x.h</FilePath>
+            </File>
+            <File>
+              <FileName>ml_lsm6dsv16x.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\ml_libs\ml_lsm6dsv16x.c</FilePath>
             </File>
           </Files>
         </Group>

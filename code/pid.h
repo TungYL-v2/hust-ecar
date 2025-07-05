@@ -23,7 +23,6 @@ typedef struct
 
 void pid_cal(pid_t *pid);
 void pid_control(void);
-void pid_control_angle(int ang);
 void pid_init(pid_t *pid, uint32_t mode, float p, float i, float d);
 void motor_target_set(int spe1, int spe2);
 void pidout_limit(pid_t *pid);
@@ -31,7 +30,4 @@ void pidout_limit(pid_t *pid);
 extern pid_t motorA;
 extern pid_t motorB;
 extern pid_t angle;
-
-extern int a;
-
 #endif
