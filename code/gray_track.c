@@ -40,7 +40,11 @@ void track()                        //1234 5678
         }
         else if((D5 != 0)&&(D6 == 0))   //1111 1011
         {
+<<<<<<< Updated upstream
             motor_target_set(293,203);
+=======
+            motor_target_set(293,183);
+>>>>>>> Stashed changes
         }
         else if((D2 == 0)&&(D3 == 0))   //1001 1111
         {
@@ -48,7 +52,11 @@ void track()                        //1234 5678
         }
         else if((D6 == 0)&&(D7 == 0))   //1111 1001
         {
+<<<<<<< Updated upstream
             motor_target_set(338,180);
+=======
+            motor_target_set(338,80);
+>>>>>>> Stashed changes
         }
         else if((D2 == 0)&&(D3 != 0))   //1011 1111
         {
@@ -56,11 +64,19 @@ void track()                        //1234 5678
         }
         else if((D6 != 0)&&(D7 == 0))   //1111 1101
         {
+<<<<<<< Updated upstream
             motor_target_set(338,180);
         }
         else if((D1 == 0)&&(D2 == 0))   //0011 1111
         {
             motor_target_set(50,450);
+=======
+            motor_target_set(338,0);
+        }
+        else if((D1 == 0)&&(D2 == 0))   //0011 1111
+        {
+            motor_target_set(0,450);
+>>>>>>> Stashed changes
         }
         else if((D7 == 0)&&(D8 == 0))   //1111 1100
         {
@@ -68,7 +84,11 @@ void track()                        //1234 5678
         }
         else if((D1 == 0)&&(D2 != 0))   //0111 1111
         {
+<<<<<<< Updated upstream
             motor_target_set(-40,500);
+=======
+            motor_target_set(-60,520);
+>>>>>>> Stashed changes
         }    
         else if((D7 !=0)&&(D8 == 0))    //1111 1110
         {

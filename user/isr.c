@@ -22,12 +22,20 @@ void TIM2_IRQHandler(void)
             pid_control();        
         }
         
+<<<<<<< Updated upstream
         else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)&&(transformation == 0) && (((fabs( yaw_o - yaw_gyro -39)<2)) ||(fabs(yaw_gyro- yaw_o - 321)<2)))//直线pid  //
+=======
+        else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)&&(transformation == 0) && (((fabs( yaw_o - yaw_gyro -37)<2)) ||(fabs(yaw_gyro- yaw_o - 323)<2)))//直线pid  //
+>>>>>>> Stashed changes
         {    
             straight = 1;
             pid_control();   
 	   }
+<<<<<<< Updated upstream
         else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)&&(transformation == 2) && (((fabs( yaw_o - yaw_gyro -144)<2)) ||(fabs(yaw_gyro- yaw_o - 216)<2)))//直线pid  //
+=======
+        else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)&&(transformation == 2) && (((fabs( yaw_o - yaw_gyro -142)<2)) ||(fabs(yaw_gyro- yaw_o - 218)<2)))//直线pid  //
+>>>>>>> Stashed changes
         {    
             straight = 1;
             pid_control(); 		   
@@ -35,16 +43,28 @@ void TIM2_IRQHandler(void)
         else if((straight == 0)&&(transformation == 0)&&(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8))   //出弯时角度不正则调整            
         {   
 			if(yaw_o >340 && yaw_o <360)
+<<<<<<< Updated upstream
 			   pid_control_angle (yaw_o - 39);
 			else
 		       pid_control_angle(yaw_o + 321);
+=======
+			   pid_control_angle (yaw_o - 37);
+			else
+		       pid_control_angle(yaw_o + 323);
+>>>>>>> Stashed changes
 	   }
 	   else if((straight == 0)&&(transformation == 2)&&(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8))   //出弯时角度不正则调整            
         {   
 			if(yaw_o >340 && yaw_o <360)
+<<<<<<< Updated upstream
 			   pid_control_angle (yaw_o - 144);
 			else
 		       pid_control_angle(yaw_o + 216);
+=======
+			   pid_control_angle (yaw_o - 142);
+			else
+		       pid_control_angle(yaw_o + 218);
+>>>>>>> Stashed changes
 	   }
         else if(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)
         {
@@ -99,7 +119,11 @@ void TIM3_IRQHandler(void)
 		{                                                 //发生区域位置转换时，蜂鸣器响，transformation加1
 			transformation = transformation +1;
 			gpio_set(GPIO_B,Pin_6,0);
+<<<<<<< Updated upstream
 			delay_ms(20);
+=======
+		//	delay_ms(50);
+>>>>>>> Stashed changes
 			gpio_set(GPIO_B,Pin_6,1);
 		}
 		
@@ -116,6 +140,7 @@ void TIM4_IRQHandler(void)
 {
 	if(TIM4->SR&1)
 	{
+<<<<<<< Updated upstream
 //		//此处编写中断代码
 //		//叫
 //		printf("%f\r\n",motorA.now);
@@ -132,6 +157,58 @@ void TIM4_IRQHandler(void)
 //		
 //		}
 //		TIM4->SR &= ~1; 
+=======
+if(transformation <=3 )    //黑白转换次数<4（未回到出发点）    
+      {
+        if((!D1 || !D2 || !D3 || !D4 || !D5 || !D6 || !D7 || !D8))  //在黑线上循迹
+        {   
+            straight = 0;
+            pid_control();        
+        }
+        
+        else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)&&(transformation == 0) && (((fabs( yaw_o - yaw_gyro -37)<2)) ||(fabs(yaw_gyro- yaw_o - 323)<2)))//直线pid  //
+        {    
+            straight = 1;
+            pid_control();   
+	   }
+        else if((D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)&&(transformation == 2) && (((fabs( yaw_o - yaw_gyro -142)<2)) ||(fabs(yaw_gyro- yaw_o - 218)<2)))//直线pid  //
+        {    
+            straight = 1;
+            pid_control(); 		   
+        }            
+        else if((straight == 0)&&(transformation == 0)&&(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8))   //出弯时角度不正则调整            
+        {   
+			if(yaw_o >340 && yaw_o <360)
+			   pid_control_angle (yaw_o - 37);
+			else
+		       pid_control_angle(yaw_o + 323);
+	   }
+	   else if((straight == 0)&&(transformation == 2)&&(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8))   //出弯时角度不正则调整            
+        {   
+			if(yaw_o >340 && yaw_o <360)
+			   pid_control_angle (yaw_o - 142);
+			else
+		       pid_control_angle(yaw_o + 218);
+	   }
+        else if(D1&&D2&&D3&&D4&&D5&&D6&&D7&&D8)
+        {
+            pid_control();
+        }
+//        else 
+//        {    
+//            motorA_duty(3000);
+//            motorB_duty(3000);
+//        }
+      }
+      if(transformation > 3)     //经过四次黑白转换，即回到A点，停车
+      {
+        gpio_set(GPIO_A,Pin_6,1);
+        gpio_set(GPIO_A,Pin_7,1);
+        gpio_set(GPIO_B,Pin_0,1);
+        gpio_set(GPIO_B,Pin_1,1);
+      }
+		TIM4->SR &= ~1; 
+>>>>>>> Stashed changes
 	}
 }
 

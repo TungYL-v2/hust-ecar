@@ -18,15 +18,24 @@ int main(void)
 	
     gray_init();
     
+<<<<<<< Updated upstream
    gpio_init(GPIO_B,Pin_6,OUT_PP);  //蜂鸣器IO引脚
     gpio_set(GPIO_B,Pin_6,1);
+=======
+//    gpio_init(GPIO_B,Pin_6,OUT_PP);  //蜂鸣器IO引脚
+//    gpio_set(GPIO_B,Pin_6,1);
+>>>>>>> Stashed changes
     gpio_init(GPIO_B,Pin_5,ID);
     //角度传感器  
      I2C_Init();
 	JY901S_Init();
     
     tim_interrupt_ms_init(TIM_3,150,0);  
+<<<<<<< Updated upstream
     tim_interrupt_ms_init(TIM_2,15,1);   //优先级低于TIM3
+=======
+    tim_interrupt_ms_init(TIM_4,15,1);   //优先级低于TIM3
+>>>>>>> Stashed changes
      	
     while (1)
 	{	JY901S_GetData();

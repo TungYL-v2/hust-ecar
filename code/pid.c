@@ -183,8 +183,13 @@ void pidout_limit(pid_t *pid)
 void pidout_limit_angle(pid_t *pid)
 {
 	// Êä³öÏŞ·ù
+<<<<<<< Updated upstream
 	if(pid->out>=13000)	
 		pid->out=13000;
+=======
+	if(pid->out>=10000)	
+		pid->out=10000;
+>>>>>>> Stashed changes
 	if(pid->out<=0)	
 		pid->out=0;
 }
