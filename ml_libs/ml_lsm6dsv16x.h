@@ -31,6 +31,10 @@
 #define LSM6DSV16X_TAP_CFG		0x56 // 
 #define LSM6DSV16X_FIFO_CTRL1	0x07
 
+
+
+#define LSM6DSV16X_COUNTER_BDR1   0x0B
+#define LSM6DSV16X_COUNTER_BDR2   0x0C
 #define LSM6DSV16X_INT1_CTRL      0x0D  // INT1引脚控制
 #define LSM6DSV16X_INT2_CTRL      0x0E  // INT2引脚控制
 #define LSM6DSV16X_MD1_CFG        0x5E  // 唤醒/数据就绪中断路由到INT1

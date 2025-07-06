@@ -14,9 +14,9 @@ void BEEP_Init(void)
 	//GPIO_ResetBits(GPIOA,GPIO_Pin_11);
 	// GPIO_SetBits(GPIOA,GPIO_Pin_11);
 	
-    gpio_init(GPIO_A,Pin_11,OUT_PP);
-	gpio_set(GPIO_A,Pin_11,0);	//低电平触发
-	gpio_set(GPIO_A,Pin_11,1);
+    gpio_init(GPIO_B,Pin_6,OUT_PP);
+	gpio_set(GPIO_B,Pin_6,0);	//低电平触发
+	gpio_set(GPIO_B,Pin_6,1);
 	
 
 }
