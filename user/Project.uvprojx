@@ -470,11 +470,6 @@
               <FilePath>..\sys\core_cmInstr.h</FilePath>
             </File>
             <File>
-              <FileName>core_cmFunc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\sys\core_cmFunc.h</FilePath>
-            </File>
-            <File>
               <FileName>core_cm3.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\sys\core_cm3.h</FilePath>
@@ -484,6 +479,11 @@
         <Group>
           <GroupName>ml_libs</GroupName>
           <Files>
+            <File>
+              <FileName>core_cmFunc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\sys\core_cmFunc.h</FilePath>
+            </File>
             <File>
               <FileName>headfile.h</FileName>
               <FileType>5</FileType>
@@ -595,24 +595,14 @@
               <FilePath>..\ml_libs\ml_oled.h</FilePath>
             </File>
             <File>
-              <FileName>ml_hmc5883l.c</FileName>
+              <FileName>ml_JY901S.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\ml_libs\ml_hmc5883l.c</FilePath>
+              <FilePath>..\ml_libs\ml_JY901S.c</FilePath>
             </File>
             <File>
-              <FileName>ml_hmc5883l.h</FileName>
+              <FileName>ml_JY901S.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\ml_libs\ml_hmc5883l.h</FilePath>
-            </File>
-            <File>
-              <FileName>ml_lsm6dsv16x.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\ml_libs\ml_lsm6dsv16x.h</FilePath>
-            </File>
-            <File>
-              <FileName>ml_lsm6dsv16x.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\ml_libs\ml_lsm6dsv16x.c</FilePath>
+              <FilePath>..\ml_libs\ml_JY901S.h</FilePath>
             </File>
           </Files>
         </Group>
